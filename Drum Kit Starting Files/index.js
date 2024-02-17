@@ -1,0 +1,1 @@
+alert("Link JS to HTML");
