@@ -17,13 +17,12 @@ for (let i = 0; i < nodeList.length; i++) {
   });
 }
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
   makeSound(event.key);
   makeAnimation(event.key);
 });
 
 function makeSound(eventKey) {
-  
   switch (eventKey) {
     case "w":
       tom1.play();
