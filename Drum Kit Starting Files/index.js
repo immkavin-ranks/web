@@ -12,30 +12,50 @@ for (let i = 0; i < nodeList.length; i++) {
   nodeList[i].addEventListener("click", function () {
     var clickedButton = this.innerHTML;
 
-    switch (clickedButton) {
-      case "w":
-        tom1.play();
-        break;
-      case "a":
-        tom2.play();
-        break;
-      case "s":
-        tom3.play();
-        break;
-      case "d":
-        tom4.play();
-        break;
-      case "j":
-        snare.play();
-        break;
-      case "k":
-        crash.play();
-        break;
-      case "l":
-        kick.play();
-        break;
-      default:
-        console.log(clickedButton);
-    }
+    makeSound(clickedButton);
+    makeAnimation(clickedButton);
   });
+}
+
+document.addEventListener("keydown", function(event) {
+  makeSound(event.key);
+  makeAnimation(event.key);
+});
+
+function makeSound(eventKey) {
+  
+  switch (eventKey) {
+    case "w":
+      tom1.play();
+      break;
+    case "a":
+      tom2.play();
+      break;
+    case "s":
+      tom3.play();
+      break;
+    case "d":
+      tom4.play();
+      break;
+    case "j":
+      snare.play();
+      break;
+    case "k":
+      crash.play();
+      break;
+    case "l":
+      kick.play();
+      break;
+    default:
+      console.log(eventKey);
+  }
+}
+
+function makeAnimation(eventKey) {
+  var pressedButton = document.querySelector("." + eventKey);
+  pressedButton.classList.add("pressed");
+
+  setTimeout(function () {
+    pressedButton.classList.remove("pressed");
+  }, 100);
 }
