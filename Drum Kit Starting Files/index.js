@@ -9,9 +9,7 @@ var crash = new Audio("./sounds/crash.mp3");
 var kick = new Audio("./sounds/kick-bass.mp3");
 
 for (let i = 0; i < nodeList.length; i++) {
-
   nodeList[i].addEventListener("click", function () {
-
     var clickedButton = this.innerHTML;
 
     switch (clickedButton) {
@@ -39,7 +37,5 @@ for (let i = 0; i < nodeList.length; i++) {
       default:
         console.log(clickedButton);
     }
-
   });
-
 }
