@@ -11,3 +11,5 @@ function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
   return randomNumber;
 }
+
+$("#"+randomChosenColor).fadeOut(100).fadeIn(100);
