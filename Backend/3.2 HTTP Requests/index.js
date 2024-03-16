@@ -6,7 +6,8 @@ const port = 3000;
 
 
 app.get('/', (req, res) => {
-
+  // console.log(req);
+  // console.log(req.rawHeaders);
   res.send("Hello, World!");
 });
 
