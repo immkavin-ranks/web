@@ -3,16 +3,14 @@ import express from "express";
 const app = express();
 const PORT = 3000;
 
-var day, action;
+var day = "a weekday";
+var action = "work hard!";
 const dayAndAction = (req, res, next) => {
-  let date = new Date();
-  let day_index = date.getDay();
+  let today = new Date();
+  let day_index = today.getDay();
   if (day_index == 0 || day_index == 6) {
     day = "the weekend";
     action = "have fun!";
-  } else {
-    day = "a weekday";
-    action = "work hard!";
   }
   next();
 };
