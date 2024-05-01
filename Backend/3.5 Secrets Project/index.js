@@ -2,8 +2,8 @@
 //Make sure you have installed all the dependencies with "npm i".
 //The password is ILoveProgramming
 
+// body-parser built in with express
 import express from "express";
-import bodyParser from "body-parser";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = 3000;
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 var page;
 const check = (req, res, next) => {
