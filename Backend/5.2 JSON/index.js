@@ -10,7 +10,7 @@ const recipeJSON =
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var index, recipe;
+let index, recipe;
 const recipes = JSON.parse(recipeJSON);
 
 function findIndex(req, res, next) {
