@@ -31,8 +31,8 @@ app.get("/filter", (req, res) => {
 app.post("/jokes", (req, res) => {
   const newJoke = {
     id: jokes.slice(-1)[0].id + 1,
-    jokeText: req.body.type,
-    jokeType: req.body.text,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
   };
   jokes.push(newJoke);
   res.json(newJoke);
@@ -47,7 +47,6 @@ app.put("/jokes/:id", (req, res) => {
     jokeType: req.body.type,
   };
   const jokeIndex = jokes.findIndex((joke) => joke.id === jokeId);
-  console.log(jokeIndex);
   jokes[jokeIndex] = putJoke;
   res.json(putJoke);
 });
