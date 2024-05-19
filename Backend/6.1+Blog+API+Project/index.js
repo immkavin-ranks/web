@@ -55,12 +55,13 @@ app.get("/posts/:id", (req, res) => {
 //CHALLENGE 3: POST a new post
 app.post("/posts", (req, res) => {
   const newPost = {
-    id: posts.splice(-1)[0].id + 1,
+    id: lastId += 1,
     title: req.body.title,
     content: req.body.content,
     author: req.body.author,
     date: new Date(),
   };
+  lastId = newPost.id;
   posts.push(newPost);
   res.json(newPost);
 });
