@@ -16,18 +16,27 @@ app.get("/random", (req, res) => {
 //2. GET a specific joke
 app.get("/jokes/:id", (req, res) => {
   const jokeId = parseInt(req.params.id);
-  const joke = jokes.find(joke => joke.id === jokeId)
+  const joke = jokes.find((joke) => joke.id === jokeId);
   res.json(joke);
 });
 
 //3. GET a jokes by filtering on the joke type
 app.get("/filter", (req, res) => {
   const type = req.query.type;
-  const foundJokes = jokes.filter(joke => joke.jokeType === type)
-  res.json(foundJokes)
-})
+  const foundJokes = jokes.filter((joke) => joke.jokeType === type);
+  res.json(foundJokes);
+});
 
 //4. POST a new joke
+app.post("/jokes", (req, res) => {
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText: req.body.type,
+    jokeType: req.body.text,
+  };
+  jokes.push(newJoke);
+  res.json(newJoke);
+});
 
 //5. PUT a joke
 
