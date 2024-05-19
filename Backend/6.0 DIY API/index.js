@@ -71,8 +71,12 @@ app.patch("/jokes/:id", (req, res) => {
 app.delete("/jokes/:id", (req, res) => {
   const jokeId = parseInt(req.params.id);
   const jokeIndex = jokes.findIndex((joke) => joke.id === jokeId);
-  const joke = jokes.splice(jokeIndex, 1)
-  res.json(joke);
+  if (jokeIndex > -1) {
+    jokes.splice(jokeIndex, 1);
+    res.sendStatus(200);
+  } else {
+    res.status(400).json({ error: `Id: ${jokeId} not found.` });
+  }
 });
 
 //8. DELETE All jokes
