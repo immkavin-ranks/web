@@ -8,15 +8,15 @@ const db = new pg.Client({
   database: "world",
   password: "pg",
   port: 5432,
-})
+});
 
 const app = express();
 const port = 3000;
 
-db.connect()
+db.connect();
 
 let totalCorrect = 0;
-let quiz = []
+let quiz = [];
 
 db.query("SELECT * FROM flags", (err, res) => {
   if (err) {
@@ -24,7 +24,8 @@ db.query("SELECT * FROM flags", (err, res) => {
   } else {
     quiz = res.rows;
   }
-})
+  db.end();
+});
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
