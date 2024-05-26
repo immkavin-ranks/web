@@ -15,24 +15,16 @@ const port = 3000;
 
 db.connect();
 
-let countries = [];
-db.query("SELECT country_code FROM visited_countries", (err, res) => {
-  if (err) {
-    console.error(err.stack);
-  } else {
-    res.rows.forEach((country) => {
-      countries.push(country.country_code);
-    });
-  }
-  db.end();
-});
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-  //Write your code here.
-  console.log(countries);
+  const result = await db.query("SELECT country_code FROM visited_countries");
+  let countries = []
+  result.rows.forEach(country => {
+    countries.push(country.country_code)
+  })
+  console.log(countries)
   res.render("index.ejs", { countries: countries, total: countries.length });
 });
 
