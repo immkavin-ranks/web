@@ -47,9 +47,11 @@ async function getColor(user_id) {
 app.get("/", async (req, res) => {
   const users = await getUsers();
   const countries = await checkVisisted(currentUserId);
+  const color = await getColor(currentUserId);
+
   res.render("index.ejs", {
     users: users,
-    color: users[0].color,
+    color: color || "teal",
     countries: countries,
     total: countries.length,
   });
@@ -57,10 +59,11 @@ app.get("/", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   const input = req.body["country"];
-
+  const users = await getUsers();
+  const color = await getColor(currentUserId);
   try {
     const result = await db.query(
-      "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE $1 || '%';",
+      "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE $1;",
       [input.toLowerCase()]
     );
     const data = result.rows[0];
@@ -73,9 +76,27 @@ app.post("/add", async (req, res) => {
       res.redirect("/");
     } catch (err) {
       console.log(err);
+      const countries = await checkVisisted(currentUserId);
+
+      res.render("index.ejs", {
+        error: "Country already visited",
+        users: users,
+        color: color,
+        countries: countries,
+        total: countries.length,
+      });
     }
   } catch (err) {
     console.log(err);
+    const countries = await checkVisisted(currentUserId);
+
+    res.render("index.ejs", {
+      error: "Country not found",
+      users: users,
+      color: color,
+      countries: countries,
+      total: countries.length,
+    });
   }
 });
 
