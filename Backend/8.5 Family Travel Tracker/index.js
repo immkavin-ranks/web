@@ -27,10 +27,10 @@ async function getUsers() {
 let users = await getUsers();
 let currentUserId = users[0].id;
 
-async function checkVisisted(user_id) {
+async function checkVisisted() {
   const result = await db.query(
     "SELECT country_code FROM visited_countries WHERE user_id = $1",
-    [user_id]
+    [currentUserId]
   );
   let countries = [];
   result.rows.forEach((country) => {
@@ -40,9 +40,9 @@ async function checkVisisted(user_id) {
   return countries;
 }
 
-async function getColor(user_id) {
+async function getColor() {
   const result = await db.query("SELECT color FROM users WHERE id = $1", [
-    user_id,
+    currentUserId,
   ]);
 
   return result.rows[0].color;
@@ -50,8 +50,8 @@ async function getColor(user_id) {
 
 app.get("/", async (req, res) => {
   const users = await getUsers();
-  const countries = await checkVisisted(currentUserId);
-  const color = await getColor(currentUserId);
+  const countries = await checkVisisted();
+  const color = await getColor();
 
   res.render("index.ejs", {
     users: users,
@@ -64,7 +64,7 @@ app.get("/", async (req, res) => {
 app.post("/add", async (req, res) => {
   const input = req.body["country"];
   const users = await getUsers();
-  const color = await getColor(currentUserId);
+  const color = await getColor();
 
   try {
     const result = await db.query(
@@ -83,7 +83,7 @@ app.post("/add", async (req, res) => {
       res.redirect("/");
     } catch (err) {
       // console.error(err.message);
-      const countries = await checkVisisted(currentUserId);
+      const countries = await checkVisisted();
 
       res.render("index.ejs", {
         error: "Country already visited",
@@ -95,7 +95,7 @@ app.post("/add", async (req, res) => {
     }
   } catch (err) {
     // console.error(err.message);
-    const countries = await checkVisisted(currentUserId);
+    const countries = await checkVisisted();
 
     res.render("index.ejs", {
       error: "Country not found",
@@ -109,10 +109,9 @@ app.post("/add", async (req, res) => {
 
 app.post("/user", async (req, res) => {
   if (req.body.user) {
-    const user_id = parseInt(req.body.user);
-    currentUserId = user_id;
-    const color = await getColor(user_id);
-    const countries = await checkVisisted(user_id);
+    currentUserId = parseInt(req.body.user);
+    const color = await getColor();
+    const countries = await checkVisisted();
 
     res.render("index.ejs", {
       countries: countries,
@@ -126,8 +125,6 @@ app.post("/user", async (req, res) => {
 });
 
 app.post("/new", async (req, res) => {
-  //Hint: The RETURNING keyword can return the data that was inserted.
-  //https://www.postgresql.org/docs/current/dml-returning.html
   try {
     const name = req.body.name;
     const color = req.body.color || "teal";
@@ -136,6 +133,7 @@ app.post("/new", async (req, res) => {
       [name, color]
     );
     // console.log(result.rows);
+    currentUserId = result.rows[0].id;
     res.redirect("/");
   } catch (err) {
     // console.error(err.message);
