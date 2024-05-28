@@ -12,6 +12,7 @@ const db = new pg.Client({
   password: "pg",
   port: 5432,
 });
+
 db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.use(express.static("public"));
 
 async function getUsers() {
   const result = await db.query("SELECT * FROM users");
+
   return result.rows;
 }
 
@@ -34,6 +36,7 @@ async function checkVisisted(user_id) {
   result.rows.forEach((country) => {
     countries.push(country.country_code);
   });
+
   return countries;
 }
 
@@ -41,6 +44,7 @@ async function getColor(user_id) {
   const result = await db.query("SELECT color FROM users WHERE id = $1", [
     user_id,
   ]);
+
   return result.rows[0].color;
 }
 
@@ -61,6 +65,7 @@ app.post("/add", async (req, res) => {
   const input = req.body["country"];
   const users = await getUsers();
   const color = await getColor(currentUserId);
+
   try {
     const result = await db.query(
       "SELECT country_code FROM countries WHERE LOWER(country_name) LIKE $1;",
@@ -68,14 +73,16 @@ app.post("/add", async (req, res) => {
     );
     const data = result.rows[0];
     const countryCode = data.country_code;
+
     try {
       await db.query(
         "INSERT INTO visited_countries (country_code, user_id) VALUES ($1, $2)",
         [countryCode, currentUserId]
       );
+
       res.redirect("/");
     } catch (err) {
-      console.log(err);
+      // console.error(err.message);
       const countries = await checkVisisted(currentUserId);
 
       res.render("index.ejs", {
@@ -87,7 +94,7 @@ app.post("/add", async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    // console.error(err.message);
     const countries = await checkVisisted(currentUserId);
 
     res.render("index.ejs", {
@@ -106,6 +113,7 @@ app.post("/user", async (req, res) => {
     currentUserId = user_id;
     const color = await getColor(user_id);
     const countries = await checkVisisted(user_id);
+
     res.render("index.ejs", {
       countries: countries,
       total: countries.length,
