@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-  const response = await db.query("SELECT *  FROM items");
+  const response = await db.query("SELECT *  FROM items ORDER BY id ASC");
   const items = response.rows;
   res.render("index.ejs", {
     listTitle: "Today",
