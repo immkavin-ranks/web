@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import { render } from "ejs";
 
 const db = new pg.Client({
   user: "postgres",
@@ -34,12 +35,19 @@ app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    await db.query("INSERT INTO users(email, password) VALUES ($1, $2)", [
+    const response = await db.query("SELECT * FROM users WHERE email = $1", [
       username,
-      password,
     ]);
-    console.log("registered");
-    res.redirect("/");
+    if (response.rows > 0) {
+      res.send("User already exists.");
+    } else {
+      const result = await db.query(
+        "INSERT INTO users(email, password) VALUES ($1, $2)",
+        [username, password]
+      );
+      console.log(result);
+      res.render("secrets.ejs");
+    }
   } catch (error) {
     console.error(error.message);
   }
@@ -49,17 +57,19 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const response = await db.query(
-      "select * from users where email = $1 and password = $2",
-      [username, password]
-    );
+    const response = await db.query("SELECT * FROM users WHERE email = $1", [
+      username,
+    ]);
     const user = response.rows[0];
     if (user) {
-      console.log("login success" + user);
+      if (user.password === password) {
+        res.render("secrets.ejs");
+      } else {
+        res.send("Incorrect password");
+      }
     } else {
-      console.log("please register");
+      res.send("please register");
     }
-    res.redirect("/");
   } catch (error) {
     console.error(error.message);
   }
