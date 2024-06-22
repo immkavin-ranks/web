@@ -10,7 +10,14 @@ const app = express();
 const port = 3000;
 const saltRounds = 10;
 
-app.use(session({ secret: "SECRET", resave: false, saveUninitialized: true }));
+app.use(
+  session({
+    secret: "SECRET",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  })
+);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(passport.initialize());
