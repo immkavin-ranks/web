@@ -56,11 +56,20 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/secrets", (req, res) => {
+app.get("/secrets", async (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("secrets.ejs");
-
     //TODO: Update this to pull in the user secret to render in secrets.ejs
+    const email = req.user.email;
+    try {
+      const response = await db.query("SELECT * FROM users WHERE email = $1", [
+        email,
+      ]);
+      const user = response.rows[0];
+      // console.log(user);
+      res.render("secrets.ejs", { secret: user.secret || "No secrets" });
+    } catch (error) {
+      console.error(error.message);
+    }
   } else {
     res.redirect("/login");
   }
@@ -68,6 +77,32 @@ app.get("/secrets", (req, res) => {
 
 //TODO: Add a get route for the submit button
 //Think about how the logic should work with authentication.
+
+app.get("/submit", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("submit.ejs");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/submit", async (req, res) => {
+  try {
+    if (req.isAuthenticated()) {
+      const secret = req.body.secret;
+      const email = req.user.email;
+      await db.query("UPDATE users SET secret = $1 WHERE email = $2", [
+        secret,
+        email,
+      ]);
+      res.redirect("/secrets");
+    } else {
+      res.redirect("/login");
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+});
 
 app.get(
   "/auth/google",
@@ -170,7 +205,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        console.log(profile);
+        // console.log(profile);
         const result = await db.query("SELECT * FROM users WHERE email = $1", [
           profile.email,
         ]);
