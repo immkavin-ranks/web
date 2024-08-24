@@ -1,12 +1,12 @@
 header {
-    background-color: #f5ba13;
-    padding: 1.25rem;
-    padding-left: 2rem;
+    padding: 1.25rem 2rem;
     color: aliceblue;
-    font-weight: 700;
     font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-h1 {
+header,
+header h1 {
     background-color: #f5ba13;
+    font-weight: 700;
 }

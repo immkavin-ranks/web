@@ -1,0 +1,22 @@
+.noteCard {
+    margin: 1.5rem 2rem;
+    padding: 1rem;
+    width: fit-content;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.noteCard h2, 
+.noteCard p {
+    font-size: 1.1rem;
+    background-color: inherit;
+}
+
+.noteCard h2 {
+    font-weight: 700;
+}
+
+.noteCard p {
+    padding-top: 0.5rem;
+}
