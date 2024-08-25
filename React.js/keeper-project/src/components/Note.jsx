@@ -1,4 +1,4 @@
-import "./styles/Note.css";
+import "../styles/Note.css";
 export default function Note() {
   return (
     <div className="noteCard">
