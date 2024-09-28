@@ -1,9 +1,9 @@
 import "../styles/Note.css";
-export default function Note() {
+export default function Note(props) {
   return (
     <div className="noteCard">
-      <h2>This is the note title</h2>
-      <p>This is the note content</p>
+      <h2>{props.title}</h2>
+      <p>{props.content}</p>
     </div>
   );
 }
