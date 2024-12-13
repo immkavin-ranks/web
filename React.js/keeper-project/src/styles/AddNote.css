@@ -1,0 +1,61 @@
+#add-note {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #ccc;
+  width: fit-content;
+  margin: 20px auto;
+  padding: 2%;
+  border-radius: 0.5rem;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+form {
+  background-color: #fff;
+}
+
+input,
+textarea {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  width: 100%;
+  resize: vertical;
+  background-color: #fff;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #f5ba13;
+}
+
+textarea {
+  min-height: 100px;
+  max-height: 150px;
+}
+
+#add-button {
+  position: absolute;
+  right: 20px;
+  bottom: -30px;
+  width: fit-content;
+  font-size: larger;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  background-color: #f5ba13;
+  color: #fff;
+  cursor: pointer;
+  padding: 14px 18px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#add-button:hover {
+  background-color: #fff;
+  color: #f5ba13;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.1);
+}

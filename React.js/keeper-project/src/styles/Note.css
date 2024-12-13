@@ -1,26 +1,43 @@
 .noteCard {
-    margin: 1.5rem 2rem;
-    padding: 1rem;
-    width: 240px;
-    height: fit-content;
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    word-wrap: break-word;
+  margin:1.5rem 1rem;
+  padding: 1rem 1rem 1.6rem 1rem;
+  width: 270px;
+  max-width: 270px;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+  cursor:cell;
+  position: relative;
 }
 
-.noteCard h2, 
+.noteCard h2,
 .noteCard p {
-    font-size: 1.1rem;
-    background-color: inherit;
+  font-size: 1.1rem;
+  background-color: inherit;
 }
 
 .noteCard h2 {
-    font-weight: 700;
-    font-style: oblique;
+  font-weight: 700;
+  font-style: oblique;
 }
 
 .noteCard p {
-    padding-top: 0.5rem;
-    font-weight: 400;
+  padding-top: 0.5rem;
+  font-weight: 400;
+}
+
+.noteCard button {
+  margin-top: 0.5rem;
+  padding:0 0.5rem;
+  color: #f5ba13;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: inherit;
+  float: right;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
 }
