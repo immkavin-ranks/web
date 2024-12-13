@@ -1,9 +1,13 @@
 import { useState } from "react";
 import "../styles/AddNote.css";
 import { PropTypes } from "prop-types";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import Zoom from "@mui/material/Zoom";
 
 export default function AddNote({ toNotes }) {
   const [note, setNote] = useState({ title: "", content: "" });
+  const [isTextAreaExpanded, setIsTextAreaExpanded] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,23 +22,34 @@ export default function AddNote({ toNotes }) {
 
   return (
     <div id="add-note">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={note.title}
-          onChange={handleChange}
-        />
+      <form
+        onSubmit={handleSubmit}
+        className="create-note"
+      >
+        {isTextAreaExpanded && (
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={note.title}
+            onChange={handleChange}
+          />
+        )}
 
         <textarea
           name="content"
           placeholder="Take a note..."
           value={note.content}
           onChange={handleChange}
+          rows={isTextAreaExpanded ? 3 : 1}
+          onClick={() => setIsTextAreaExpanded(true)}
         />
 
-        <input id="add-button" type="submit" value="+" />
+        <Zoom in={isTextAreaExpanded ? true : false}>
+          <Fab id="add-button" type="submit" disableRipple variant="circular" onClick={() => setIsTextAreaExpanded(false)}>
+            <AddIcon id="add-icon" />
+          </Fab>
+        </Zoom>
       </form>
     </div>
   );

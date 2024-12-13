@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/Note.css";
 import PropTypes from "prop-types";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Note(props) {
   const [onHover, setOnHover] = useState();
@@ -12,13 +13,7 @@ export default function Note(props) {
     >
       <h2>{props.title}</h2>
       <p>{props.content}</p>
-      {/* <button
-        style={onHover ? { display: "inline" } : { display: "none" }}
-        onClick={() => props.onDelete(props.id)}
-      >
-        DELETE
-      </button> */}
-      {onHover ? <button onClick={() => props.onDelete(props.id)}>DELETE</button> : <button>&nbsp;</button>}
+      {onHover ? <button onClick={() => props.onDelete(props.id)}><DeleteIcon /></button> : <button>&nbsp;</button>}
     </div>
   );
 }

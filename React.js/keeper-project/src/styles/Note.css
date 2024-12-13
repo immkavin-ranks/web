@@ -41,3 +41,7 @@
   bottom: 0.5rem;
   right: 0.5rem;
 }
+
+.noteCard svg {
+  background-color: #fff;
+}
